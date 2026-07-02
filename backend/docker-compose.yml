@@ -30,22 +30,52 @@ services:
     container_name: beleqet-backend
     restart: unless-stopped
     ports:
-      - "4000:4000"
+      - "4002:4002"  # Completely shifts both host and container to 4002
     environment:
-      - NODE_ENV=development
-      - PORT=4000
-      - FRONTEND_URL=http://localhost:3000
+      - NODE_ENV=${NODE_ENV}
+      - PORT=4002    # Forces NestJS to listen on 4002 inside the container
+      - FRONTEND_URL=${FRONTEND_URL}
+      
+      # Core internal network container mappings
       - DATABASE_URL=postgresql://beleqet_user:your_password@db:5432/beleqet_db
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - REDIS_PASSWORD=
-      - REDIS_TLS=false
-      - JWT_ACCESS_SECRET=docker_default_secret_please_change_in_production
-      - JWT_ACCESS_EXPIRES=15m
-      - JWT_REFRESH_EXPIRES=30d
-      - BULL_BOARD_USERNAME=admin
-      - BULL_BOARD_PASSWORD=admin
-      - OPENAI_API_KEY=dummy_key_for_testing
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_TLS=${REDIS_TLS}
+      
+      # Application Secrets & Security
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - JWT_ACCESS_EXPIRES=${JWT_ACCESS_EXPIRES}
+      - JWT_REFRESH_EXPIRES=${JWT_REFRESH_EXPIRES}
+      
+      # Integrations & Financial Gateways
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL}
+      
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHANNEL_ID=${TELEGRAM_CHANNEL_ID}
+      
+      - CHAPA_SECRET_KEY=${CHAPA_SECRET_KEY}
+      - CHAPA_PUBLIC_KEY=${CHAPA_PUBLIC_KEY}
+      - CHAPA_WEBHOOK_SECRET=${CHAPA_WEBHOOK_SECRET}
+      - CHAPA_CALLBACK_URL=${CHAPA_CALLBACK_URL}
+      - CHAPA_RETURN_URL=${CHAPA_RETURN_URL}
+      
+      # Object Storage & Email Engines
+      - AWS_S3_BUCKET=${AWS_S3_BUCKET}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - EMAIL_FROM=${EMAIL_FROM}
+      
+      # Queue Worker Dashboard Configurations
+      - BULL_BOARD_USERNAME=${BULL_BOARD_USERNAME}
+      - BULL_BOARD_PASSWORD=${BULL_BOARD_PASSWORD}
     depends_on:
       - db
       - redis
