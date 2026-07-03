@@ -14,7 +14,7 @@ services:
           name: beleqet-db
           property: connectionString
       - key: REDIS_HOST
-        value: "none"
+        value: "none" # Set to 'none' to prevent crashing if you don't have Redis
       - key: JWT_ACCESS_SECRET
         value: secure_production_random_secret_string_here
       - key: BULL_BOARD_USERNAME
