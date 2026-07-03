@@ -3,28 +3,6 @@ services:
     name: beleqet-backend
     runtime: node
     plan: free
-    buildCommand: npm install && npm run build && npm run prisma:generate
-    startCommand: npm run prisma:migrate && npm run prisma:seed && npm run start:prod
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: DATABASE_URL
-        value: postgresql://postgres:postgres@localhost:5432/postgres
-      - key: REDIS_HOST
-        value: localhost
-      - key: REDIS_PORT
-        value: "6379"
-      - key: JWT_ACCESS_SECRET
-        value: secure_production_random_secret_string_here
-      - key: BULL_BOARD_USERNAME
-        value: admin
-      - key: BULL_BOARD_PASSWORD
-        value: admin
-        services:
-  - type: web
-    name: beleqet-backend
-    runtime: node
-    plan: free
     rootDirectory: backend
     buildCommand: npm install && npm run build && npm run prisma:generate
     startCommand: npm run prisma:migrate && npm run prisma:seed && npm run start:prod
