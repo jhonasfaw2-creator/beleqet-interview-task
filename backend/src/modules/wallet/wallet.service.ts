@@ -41,7 +41,7 @@ export class WalletService {
     if (wallet.availableBalance < dto.amount) throw new BadRequestException('Insufficient available balance');
 
     // Step 1: Deduct balance and create a PENDING transaction atomically
-    const { tx } = await this.prisma.$transaction(async (prisma) => {
+    const { tx } = await this.prisma.$transaction(async (prisma: any) => {
       await prisma.freelancerWallet.update({
         where: { userId },
         data: { availableBalance: { decrement: dto.amount } },

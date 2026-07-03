@@ -185,7 +185,7 @@ export class AuthService {
       select: { id: true },
     });
     if (tokens.length > MAX_SESSIONS) {
-      const toDelete = tokens.slice(0, tokens.length - MAX_SESSIONS).map(t => t.id);
+      const toDelete = tokens.slice(0, tokens.length - MAX_SESSIONS).map((t: any) => t.id);
       await this.prisma.refreshToken.deleteMany({ where: { id: { in: toDelete } } });
     }
 
