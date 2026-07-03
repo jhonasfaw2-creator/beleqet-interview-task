@@ -14,7 +14,15 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT', 4000);
   const nodeEnv = configService.get<string>('NODE_ENV', 'development');
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
 
+  // 🔥 ADD THIS
+  app.setGlobalPrefix('api/v1');
+
+  await app.listen(4000);
+}
+bootstrap();
   // ── Security ──────────────────────────────────────────────────────────────
   app.use(helmet());
   app.enableCors({
